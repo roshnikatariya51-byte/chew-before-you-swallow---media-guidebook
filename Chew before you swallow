@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHEW BEFORE YOU SWALLOW</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Reenie+Beanie&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #FF4000;
+  --blue:   #0A1045;
+  --lace:   #FFF3E1;
+  --white:  #ffffff;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--lace);
+  color: var(--blue);
+  font-family: 'Jost', sans-serif;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999;
+}
+
+/* ── COVER ── */
+.cover {
+min-height: 100vh;
+background: var(–blue);
+display: flex; flex-direction: column; justify-content: center;
+padding: 3.5rem 2rem 5.5rem;
+position: relative; overflow: hidden;
+}
+.cover-dots {
+position: absolute; inset: 0;
+background-image: radial-gradient(circle, rgba(255,64,0,0.15) 1px, transparent 1px);
+background-size: 28px 28px;
+pointer-events: none;
+}
+.cover-label {
+font-family: ‘Jost’, sans-serif;
+font-size: 0.6rem; letter-spacing: 0.35em;
+color: rgba(255,243,225,0.4);
+text-transform: uppercase;
+margin-bottom: 1.5rem;
+position: relative; z-index: 2;
+}
+.cover-h1 {
+font-family: ‘Unbounded’, sans-serif;
+font-size: clamp(2.6rem, 10vw, 6.5rem);
+font-weight: 900;
+line-height: 1.0;
+color: var(–lace);
+position: relative; z-index: 2;
+letter-spacing: -0.02em;
+}
+.cover-h1 .orange { color: var(–orange); display: block; }
+.cover-sub {
+margin-top: 2rem;
+font-family: ‘Reenie Beanie’, cursive;
+font-size: 1.6rem;
+color: rgba(255,243,225,0.55);
+position: relative; z-index: 2;
+line-height: 1.4;
+max-width: 340px;
+}
+.cover-badge {
+position: absolute; bottom: 5rem; right: 2rem;
+width: 82px; height: 82px;
+background: var(–orange); border-radius: 50%;
+border: 3px solid var(–lace);
+display: flex; align-items: center; justify-content: center; text-align: center;
+animation: rot 14s linear infinite; z-index: 3;
+}
+.cover-badge span {
+font-family: ‘Jost’, sans-serif; font-size: 0.42rem;
+font-weight: 700; color: var(–lace);
+text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.6;
+}
+@keyframes rot { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.cover-ticker {
+position: absolute; bottom: 0; left: 0; right: 0;
+background: var(–orange); overflow: hidden; height: 40px;
+display: flex; align-items: center;
+}
+.ticker-inner {
+display: flex; gap: 2rem; white-space: nowrap;
+animation: tick 22s linear infinite;
+font-family: ‘Unbounded’, sans-serif; font-size: 0.65rem; font-weight: 700;
+color: var(–lace); letter-spacing: 0.08em; padding: 0 1rem;
+text-transform: uppercase;
+}
+@keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.ticker-inner .sep { opacity: 0.35; }
+
+/* ── SHARED ── */
+.sec {
+padding: 4.5rem 2rem 5rem;
+position: relative; overflow: hidden;
+border-top: 3px solid var(–blue);
+}
+.sec–blue   { background: var(–blue);   color: var(–lace); border-color: var(–orange); }
+.sec–lace   { background: var(–lace);   color: var(–blue); }
+.sec–orange { background: var(–orange); color: var(–lace); border-color: var(–blue); }
+
+.sec-num {
+position: absolute; top: 1rem; right: 1.5rem;
+font-family: ‘Unbounded’, sans-serif; font-weight: 900;
+font-size: 7rem; line-height: 1;
+opacity: 0.06; pointer-events: none; user-select: none;
+}
+
+.tag {
+display: inline-block;
+font-family: ‘Jost’, sans-serif;
+font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase;
+padding: 4px 12px; margin-bottom: 1.2rem;
+font-weight: 600;
+}
+.sec–blue   .tag { background: var(–orange); color: var(–lace); }
+.sec–lace   .tag { background: var(–blue);   color: var(–lace); }
+.sec–orange .tag { background: var(–blue);   color: var(–lace); }
+
+.sec-h {
+font-family: ‘Unbounded’, sans-serif;
+font-size: clamp(1.8rem, 7vw, 3.8rem);
+font-weight: 900;
+line-height: 1.05; letter-spacing: -0.02em;
+margin-bottom: 2rem;
+}
+.sec-h .hl { padding: 2px 6px; display: inline; }
+.sec–blue   .sec-h .hl { background: var(–orange); color: var(–lace); }
+.sec–lace   .sec-h .hl { background: var(–orange); color: var(–lace); }
+.sec–orange .sec-h .hl { background: var(–blue);   color: var(–lace); }
+
+.body-txt {
+font-family: ‘Jost’, sans-serif;
+font-size: 0.95rem; line-height: 1.85; max-width: 580px;
+font-weight: 400;
+}
+
+.pull {
+font-family: ‘Reenie Beanie’, cursive;
+font-size: clamp(1.6rem, 5vw, 2.4rem);
+line-height: 1.35;
+margin: 2.5rem 0;
+padding-left: 1.2rem;
+border-left: 5px solid;
+}
+.sec–blue   .pull { color: var(–orange); border-color: var(–orange); }
+.sec–lace   .pull { color: var(–blue);   border-color: var(–orange); }
+.sec–orange .pull { color: var(–lace);   border-color: var(–blue); }
+
+.pull-attr {
+display: block;
+font-family: ‘Jost’, sans-serif;
+font-size: 0.65rem; letter-spacing: 0.12em;
+text-transform: uppercase; margin-top: 0.4rem;
+opacity: 0.55;
+}
+
+/* tip */
+.tip {
+margin: 2rem 0; padding: 1.4rem;
+border: 2px solid; position: relative;
+font-family: ‘Jost’, sans-serif;
+}
+.sec–blue   .tip { background: rgba(255,64,0,0.08);   border-color: var(–orange); }
+.sec–lace   .tip { background: rgba(10,16,69,0.05);   border-color: var(–blue); }
+.sec–orange .tip { background: rgba(255,243,225,0.12); border-color: var(–lace); }
+.tip::before {
+content: ‘wait, actually —’;
+font-family: ‘Reenie Beanie’, cursive;
+font-size: 1.1rem;
+position: absolute; top: -14px; left: 12px;
+padding: 0 8px;
+}
+.sec–blue   .tip::before { background: var(–blue);   color: var(–orange); }
+.sec–lace   .tip::before { background: var(–lace);   color: var(–orange); }
+.sec–orange .tip::before { background: var(–orange); color: var(–lace); }
+.tip p { font-size: 0.88rem; line-height: 1.8; }
+
+/* rip */
+.rip { height: 36px; }
+.rip–bl { background: var(–blue);   clip-path: polygon(0 0,3% 55%,7% 15%,12% 70%,18% 25%,23% 75%,29% 20%,35% 68%,40% 18%,46% 72%,52% 22%,58% 68%,64% 25%,70% 60%,76% 18%,82% 72%,88% 22%,94% 66%,100% 28%,100% 100%,0 100%); }
+.rip–lc { background: var(–lace);  clip-path: polygon(0 38%,3% 88%,7% 42%,12% 90%,18% 35%,23% 85%,29% 40%,35% 82%,40% 28%,46% 84%,52% 32%,58% 78%,64% 25%,70% 72%,76% 36%,82% 80%,88% 28%,94% 74%,100% 20%,100% 0,0 0); }
+.rip–or { background: var(–orange); clip-path: polygon(0 0,3% 55%,7% 15%,12% 70%,18% 25%,23% 75%,29% 20%,35% 68%,40% 18%,46% 72%,52% 22%,58% 68%,64% 25%,70% 60%,76% 18%,82% 72%,88% 22%,94% 66%,100% 28%,100% 100%,0 100%); }
+
+/* ── TOPIC 1 — THREE FLAVOURS ── */
+.flavours {
+display: flex; flex-direction: column; gap: 0;
+margin: 2rem 0;
+border: 2px solid var(–orange);
+}
+.flavour-item {
+padding: 1.3rem 1.4rem;
+border-bottom: 2px solid rgba(255,64,0,0.2);
+position: relative;
+}
+.flavour-item:last-child { border-bottom: none; }
+.flavour-name {
+font-family: ‘Unbounded’, sans-serif;
+font-size: 1rem; font-weight: 700;
+letter-spacing: 0.02em; margin-bottom: 0.4rem;
+}
+.f-mis  .flavour-name { color: var(–orange); }
+.f-dis  .flavour-name { color: #ff8c00; }
+.f-mal  .flavour-name { color: #ffbf80; }
+.flavour-def {
+font-size: 0.88rem; line-height: 1.7;
+margin-bottom: 0.4rem;
+}
+.flavour-eg {
+font-family: ‘Reenie Beanie’, cursive;
+font-size: 1.1rem; opacity: 0.6;
+}
+
+/* ── TOPIC 2 — NEWS GRID ── */
+.news-grid {
+display: grid; grid-template-columns: 1fr 1fr;
+gap: 0; margin: 2rem 0;
+border: 2px solid var(–blue);
+}
+.news-card {
+padding: 1.2rem;
+border-right: 2px solid rgba(10,16,69,0.15);
+border-bottom: 2px solid rgba(10,16,69,0.15);
+}
+.news-card:nth-child(even) { border-right: none; }
+.news-card:nth-child(3), .news-card:nth-child(4) { border-bottom: none; }
+.news-card-num {
+font-family: ‘Unbounded’, sans-serif;
+font-size: 1.8rem; font-weight: 900;
+color: var(–orange); line-height: 1; margin-bottom: 0.5rem;
+}
+.news-card-name {
+font-family: ‘Unbounded’, sans-serif;
+font-size: 0.65rem; font-weight: 700;
+letter-spacing: 0.05em; margin-bottom: 0.5rem;
+color: var(–blue);
+}
+.news-card p { font-size: 0.8rem; line-height: 1.7; color: rgba(10,16,69,0.75); }
+
+/* ── TOPIC 3 — TOOLKIT ── */
+.toolkit {
+display: flex; flex-direction: column;
+gap: 0; margin: 2rem 0;
+}
+.tool-item {
+padding: 1.2rem 0;
+border-bottom: 1px dashed rgba(255,243,225,0.15);
+display: grid; grid-template-columns: 2.5rem 1fr;
+gap: 1rem; align-items: start;
+}
+.tool-item:last-child { border-bottom: none; }
+.tool-n {
+font-family: ‘Unbounded’, sans-serif;
+font-size: 1.4rem; font-weight: 900;
+color: var(–orange); line-height: 1.1;
+}
+.tool-body {}
+.tool-name {
+font-family: ‘Unbounded’, sans-serif;
+font-size: 0.75rem; font-weight: 700;
+letter-spacing: 0.03em; margin-bottom: 0.3rem;
+color: var(–lace);
+}
+.tool-def { font-size: 0.82rem; line-height: 1.65; color: rgba(255,243,225,0.75); margin-bottom: 0.3rem; }
+.tool-eg  { font-family: ‘Reenie Beanie’, cursive; font-size: 1.05rem; color: var(–orange); }
+
+/* ── TOPIC 4 — SICK ── */
+.sick-grid {
+display: grid; grid-template-columns: 1fr 1fr;
+gap: 1rem; margin: 2rem 0;
+}
+.sick-card {
+padding: 1.2rem;
+border: 2px solid rgba(255,64,0,0.25);
+background: rgba(255,64,0,0.05);
+}
+.sick-letter {
+font-family: ‘Unbounded’, sans-serif;
+font-size: 2.8rem; font-weight: 900;
+color: var(–orange); line-height: 1; margin-bottom: 0.4rem;
+}
+.sick-name {
+font-family: ‘Unbounded’, sans-serif;
+font-size: 0.65rem; font-weight: 700;
+letter-spacing: 0.05em; margin-bottom: 0.4rem;
+}
+.sick-desc { font-size: 0.8rem; line-height: 1.7; opacity: 0.8; }
+
+.stat-big {
+font-family: ‘Unbounded’, sans-serif;
+font-size: clamp(3rem, 12vw, 6rem);
+font-weight: 900; color: var(–orange);
+line-height: 1; margin-bottom: 0.3rem;
+}
+.stat-label { font-size: 0.82rem; line-height: 1.7; opacity: 0.75; max-width: 400px; margin-bottom: 2rem; }
+
+/* ══════════════════════════
+THE REACTION LAB
+══════════════════════════ */
+.lab-wrap {
+margin-top: 2.5rem;
+border: 3px solid var(–lace);
+overflow: hidden;
+}
+.lab-header {
+background: var(–lace); padding: 1rem 1.4rem;
+display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+}
+.lab-header h3 {
+font-family: ‘Unbounded’, sans-serif;
+font-size: 1.4rem; font-weight: 900; color: var(–blue);
+letter-spacing: -0.01em;
+}
+.lab-counter {
+font-family: ‘Reenie Beanie’, cursive;
+font-size: 1.4rem; color: var(–orange);
+}
+.lab-progress { height: 5px; background: rgba(255,243,225,0.1); }
+.lab-progress-fill { height: 100%; background: var(–orange); transition: width 0.4s ease; width: 0%; }
+.lab-instr {
+background: rgba(255,243,225,0.05);
+padding: 0.9rem 1.4rem;
+font-family: ‘Jost’, sans-serif;
+font-size: 0.72rem; line-height: 1.75; color: rgba(255,243,225,0.6);
+border-bottom: 1px solid rgba(255,243,225,0.1);
+}
+.lab-cards { padding: 1.2rem; display: flex; flex-direction: column; gap: 1.2rem; }
+
+.hl-card {
+background: rgba(255,243,225,0.04);
+border: 2px solid rgba(255,243,225,0.1);
+border-radius: 4px; overflow: hidden;
+transition: border-color 0.2s;
+}
+.hl-card.answered { pointer-events: none; }
+.hl-card.revealed-correct { border-color: var(–orange) !important; background: rgba(255,64,0,0.08); }
+.hl-card.revealed-wrong   { border-color: rgba(255,243,225,0.3) !important; }
+
+.hl-tag {
+padding: 0.3rem 0.8rem;
+font-family: ‘Jost’, sans-serif;
+font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+font-weight: 600; color: rgba(255,243,225,0.4);
+border-bottom: 1px solid rgba(255,243,225,0.08);
+}
+.hl-text {
+padding: 1rem 1.2rem 0.8rem;
+font-family: ‘Jost’, sans-serif;
+font-size: 0.9rem; line-height: 1.65;
+color: var(–lace); font-style: italic;
+}
+.hl-question {
+padding: 0 1.2rem 0.5rem;
+font-family: ‘Jost’, sans-serif;
+font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+color: rgba(255,243,225,0.4); font-weight: 600;
+}
+.hl-emotions {
+display: flex; flex-wrap: wrap; gap: 0.5rem;
+padding: 0.5rem 1.2rem 1rem;
+}
+.emo-btn {
+background: transparent;
+border: 2px solid rgba(255,243,225,0.2);
+color: rgba(255,243,225,0.7);
+padding: 0.4rem 0.8rem;
+font-family: ‘Jost’, sans-serif; font-size: 0.7rem; font-weight: 600;
+cursor: pointer; letter-spacing: 0.06em;
+transition: all 0.15s; border-radius: 2px;
+text-transform: uppercase;
+}
+.emo-btn:hover { border-color: var(–orange); color: var(–orange); }
+.emo-btn.picked-right { background: var(–orange); border-color: var(–orange); color: var(–lace); }
+.emo-btn.picked-wrong { background: rgba(255,243,225,0.1); border-color: rgba(255,243,225,0.3); color: rgba(255,243,225,0.5); }
+.emo-btn.show-right   { border-color: var(–orange); color: var(–orange); }
+
+.hl-reveal {
+display: none;
+padding: 0.8rem 1.2rem 1rem;
+border-top: 1px solid rgba(255,243,225,0.08);
+}
+.hl-card.answered .hl-reveal { display: block; }
+.reveal-result {
+font-family: ‘Unbounded’, sans-serif;
+font-size: 0.7rem; font-weight: 700;
+letter-spacing: 0.05em; margin-bottom: 0.4rem;
+}
+.reveal-result.right { color: var(–orange); }
+.reveal-result.wrong { color: rgba(255,243,225,0.5); }
+.reveal-explain {
+font-family: ‘Reenie Beanie’, cursive;
+font-size: 1.15rem; line-height: 1.6;
+color: rgba(255,243,225,0.65);
+}
+
+/* ── FOOTER ── */
+.footer {
+background: var(–blue); color: var(–lace);
+padding: 3.5rem 2rem 4rem;
+position: relative; overflow: hidden;
+border-top: 3px solid var(–orange);
+}
+.footer::before {
+content: ‘chew.’;
+font-family: ‘Unbounded’, sans-serif; font-weight: 900;
+font-size: 8rem; position: absolute; right: -1rem; bottom: -1.5rem;
+opacity: 0.04; line-height: 1; color: var(–orange); pointer-events: none;
+}
+.footer-h {
+font-family: ‘Unbounded’, sans-serif;
+font-size: clamp(1.4rem, 5vw, 2.2rem);
+font-weight: 900; letter-spacing: -0.01em;
+color: var(–orange); margin-bottom: 0.8rem; line-height: 1.2;
+}
+.footer-txt { font-size: 0.88rem; line-height: 1.9; opacity: 0.75; max-width: 460px; }
+.footer-refs {
+margin-top: 2rem; padding-top: 1.5rem;
+border-top: 1px solid rgba(255,243,225,0.1);
+font-size: 0.62rem; line-height: 1.9;
+opacity: 0.4; letter-spacing: 0.05em;
+}
+.footer-refs strong { opacity: 0.7; letter-spacing: 0.12em; font-size: 0.58rem; text-transform: uppercase; }
+.footer-bar {
+margin-top: 1.5rem; padding-top: 1rem;
+border-top: 1px solid rgba(255,243,225,0.08);
+display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+font-size: 0.55rem; opacity: 0.3; letter-spacing: 0.18em; text-transform: uppercase;
+}
+
+/* fade */
+.fade { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease; }
+.fade.vis { opacity: 1; transform: translateY(0); }
+</style>
+
+</head>
+<body>
+
+<!-- ══ COVER ══ -->
+
+<div class="cover">
+  <div class="cover-dots"></div>
+  <p class="cover-label">A media literacy zine · vol.02 · 2025</p>
+  <h1 class="cover-h1">
+    CHEW<br>BEFORE<br>
+    <span class="orange">YOU SWALLOW</span>
+  </h1>
+  <p class="cover-sub">pov: your brain is someone's product — and they're very good at their job</p>
+  <div class="cover-badge"><span>MEDIA<br>LITERACY<br>ZINE</span></div>
+  <div class="cover-ticker">
+    <div class="ticker-inner">
+      <span>CHEW BEFORE YOU SWALLOW</span><span class="sep"> &nbsp;·&nbsp; </span>
+      <span>YOUR FEED CHOSE YOU</span><span class="sep"> &nbsp;·&nbsp; </span>
+      <span>THAT EMOTION WAS SCHEDULED</span><span class="sep"> &nbsp;·&nbsp; </span>
+      <span>VERIFY BEFORE YOU AMPLIFY</span><span class="sep"> &nbsp;·&nbsp; </span>
+      <span>CHEW BEFORE YOU SWALLOW</span><span class="sep"> &nbsp;·&nbsp; </span>
+      <span>YOUR FEED CHOSE YOU</span><span class="sep"> &nbsp;·&nbsp; </span>
+      <span>THAT EMOTION WAS SCHEDULED</span><span class="sep"> &nbsp;·&nbsp; </span>
+      <span>VERIFY BEFORE YOU AMPLIFY</span><span class="sep"> &nbsp;·&nbsp; </span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOPIC 1 ══ -->
+
+<div class="sec sec--blue fade">
+  <div class="sec-num">01</div>
+  <span class="tag">Topic 01</span>
+  <h2 class="sec-h">THREE<br><span class="hl">FLAVOURS</span><br>OF FALSE</h2>
+  <p class="body-txt">Not all fake is the same. Before you react — know which one you're dealing with.</p>
+
+  <div class="flavours">
+    <div class="flavour-item f-mis">
+      <div class="flavour-name">MISINFORMATION</div>
+      <div class="flavour-def">Shared wrong. No bad intent. They just didn't check.</div>
+      <div class="flavour-eg">your aunt forwarding a health myth she fully believed 💌</div>
+    </div>
+    <div class="flavour-item f-dis">
+      <div class="flavour-name">DISINFORMATION</div>
+      <div class="flavour-def">Made up on purpose. There's a plan behind it.</div>
+      <div class="flavour-eg">a bot network flooding feeds before an election 🤖</div>
+    </div>
+    <div class="flavour-item f-mal">
+      <div class="flavour-name">MALINFORMATION</div>
+      <div class="flavour-def">Actually true — but used as a weapon to destroy someone.</div>
+      <div class="flavour-eg">leaking someone's private photos to ruin their reputation 📵</div>
+    </div>
+  </div>
+
+  <div class="pull">
+    intent is everything.
+    <span class="pull-attr">— the one thing to remember</span>
+  </div>
+
+  <div class="tip"><p>When you see something false: does the person sharing it <em>know</em> it's false? If not — correct gently. If yes — don't engage. Amplifying disinformation, even to debunk it, spreads it further.</p></div>
+</div>
+
+<div class="rip rip--lc"></div>
+
+<!-- ══ TOPIC 2 ══ -->
+
+<div class="sec sec--lace fade">
+  <div class="sec-num" style="color:var(--blue)">02</div>
+  <span class="tag">Topic 02</span>
+  <h2 class="sec-h">NEWS ISN'T<br>FOUND.<br><span class="hl">IT'S BUILT.</span></h2>
+  <p class="body-txt">Someone chose every word you just read. Every story has four invisible hands shaping it.</p>
+
+  <div class="news-grid">
+    <div class="news-card">
+      <div class="news-card-num">01</div>
+      <div class="news-card-name">SELECTION</div>
+      <p>Why THIS story — and not the 1000 others that happened today?</p>
+    </div>
+    <div class="news-card">
+      <div class="news-card-num">02</div>
+      <div class="news-card-name">FRAMING</div>
+      <p>"Riot" or "protest"? Same event. Very different story.</p>
+    </div>
+    <div class="news-card">
+      <div class="news-card-num">03</div>
+      <div class="news-card-name">OMISSION</div>
+      <p>What's NOT in the story is as powerful as what is.</p>
+    </div>
+    <div class="news-card">
+      <div class="news-card-num">04</div>
+      <div class="news-card-name">AUDIENCE</div>
+      <p>Who is this made for? That changes everything about how it's told.</p>
+    </div>
+  </div>
+
+  <div class="pull" style="color:var(--blue);border-color:var(--orange);">
+    "language is never innocent."
+    <span class="pull-attr" style="color:var(--blue);">— Stuart Hall, cultural theorist</span>
+  </div>
+
+  <div class="tip"><p>Five questions for any media: Who made it? What techniques did they use? How might someone else read this differently? What values does it push? Why now?</p></div>
+</div>
+
+<div class="rip rip--bl"></div>
+
+<!-- ══ TOPIC 3 ══ -->
+
+<div class="sec sec--blue fade">
+  <div class="sec-num">03</div>
+  <span class="tag">Topic 03</span>
+  <h2 class="sec-h">THE<br><span class="hl">MANIPULATION</span><br>TOOLKIT</h2>
+  <p class="body-txt">These tricks are almost 100 years old. They still work on you — because they bypass logic and go straight for emotion.</p>
+
+  <div class="toolkit">
+    <div class="tool-item">
+      <div class="tool-n">01</div>
+      <div class="tool-body">
+        <div class="tool-name">BANDWAGON</div>
+        <div class="tool-def">Pressure to join because everyone else already has.</div>
+        <div class="tool-eg">"9 out of 10 people in your area have already switched..." 🐑</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-n">02</div>
+      <div class="tool-body">
+        <div class="tool-name">FEAR APPEAL</div>
+        <div class="tool-def">Exaggerates a threat so you stop thinking and start reacting.</div>
+        <div class="tool-eg">"If you don't act now, your family will be at risk." 😨</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-n">03</div>
+      <div class="tool-body">
+        <div class="tool-name">PLAIN FOLKS</div>
+        <div class="tool-def">Powerful people pretend to be ordinary to seem trustworthy.</div>
+        <div class="tool-eg">the billionaire eating at McDonald's for the cameras 📸</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-n">04</div>
+      <div class="tool-body">
+        <div class="tool-name">NAME CALLING</div>
+        <div class="tool-def">Attach a label to someone. Now you don't have to hear their argument.</div>
+        <div class="tool-eg">dismissing critics as "radical" without engaging them once 🏷️</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-n">05</div>
+      <div class="tool-body">
+        <div class="tool-name">GLITTERING GENERALITIES</div>
+        <div class="tool-def">Vague positive words that sound great but mean absolutely nothing.</div>
+        <div class="tool-eg">"Freedom. Family. Values." — impossible to disagree with, impossible to define ✨</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-n">06</div>
+      <div class="tool-body">
+        <div class="tool-name">TRANSFER</div>
+        <div class="tool-def">Link yourself to something already respected. Borrow its credibility.</div>
+        <div class="tool-eg">politician speaks in front of the national flag. says nothing new 🚩</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pull">
+    knowing the name slows you down by one second.<br>that second is enough.
+  </div>
+</div>
+
+<div class="rip rip--lc"></div>
+
+<!-- ══ TOPIC 4 ══ -->
+
+<div class="sec sec--lace fade">
+  <div class="sec-num" style="color:var(--blue)">04</div>
+  <span class="tag">Topic 04</span>
+  <h2 class="sec-h">CHECK IT.<br><span class="hl">THEN</span><br>SHARE IT.</h2>
+
+  <div class="stat-big">6×</div>
+  <p class="stat-label">False news travels 6 times faster than true news on social media. You are part of that chain. — MIT, 2018</p>
+
+  <div class="sick-grid">
+    <div class="sick-card">
+      <div class="sick-letter">S</div>
+      <div class="sick-name">SOURCE</div>
+      <p class="sick-desc">Where did this originally come from? Is there a primary source?</p>
+    </div>
+    <div class="sick-card">
+      <div class="sick-letter">I</div>
+      <div class="sick-name">IMAGE</div>
+      <p class="sick-desc">Reverse image search that photo. Old images are recycled constantly.</p>
+    </div>
+    <div class="sick-card">
+      <div class="sick-letter">C</div>
+      <div class="sick-name">CORROBORATE</div>
+      <p class="sick-desc">Is anyone else reporting this? One source = suspicious.</p>
+    </div>
+    <div class="sick-card">
+      <div class="sick-letter">K</div>
+      <div class="sick-name">KNOW YOUR BIAS</div>
+      <p class="sick-desc">Are you sharing because it's true — or because it confirms what you already think?</p>
+    </div>
+  </div>
+
+  <div class="pull" style="color:var(--blue);border-color:var(--orange);">
+    "sharing a false story makes you part of the story."
+    <span class="pull-attr" style="color:var(--blue);">— Craig Silverman, misinformation researcher</span>
+  </div>
+
+  <div class="tip"><p>Before you share anything that made you angry, sad, or shocked — pause. Those are the three emotions disinformation is engineered to trigger. Tools: <strong>Snopes · FactCheck.org · TinEye · Google Images</strong></p></div>
+</div>
+
+<div class="rip rip--or"></div>
+
+<!-- ══ THE REACTION LAB ══ -->
+
+<div class="sec sec--blue fade">
+  <div class="sec-num">05</div>
+  <span class="tag">Interactive</span>
+  <h2 class="sec-h">THE<br><span class="hl">REACTION</span><br>LAB</h2>
+  <p class="body-txt">Five headlines. One question each: what emotion were they designed to trigger in you? Just play. No score.</p>
+
+  <div class="lab-wrap">
+    <div class="lab-header">
+      <h3>🧪 THE REACTION LAB</h3>
+      <div class="lab-counter"><span id="labDone">0</span> / 5 done</div>
+    </div>
+    <div class="lab-progress"><div class="lab-progress-fill" id="labFill"></div></div>
+    <div class="lab-instr">Read the headline. Tap the emotion it was <em>designed</em> to make you feel. Then see why it works.</div>
+    <div class="lab-cards" id="labCards"></div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+
+<div class="footer">
+  <h3 class="footer-h">NOW YOU KNOW<br>HOW IT WORKS.</h3>
+  <p class="footer-txt">You'll still feel the emotions. That's fine — you're human. But now there's a tiny voice in the back of your head that says: wait. who built this feeling? That voice is media literacy.</p>
+  <div class="footer-refs">
+    <strong>References</strong><br>
+    Wardle, C. &amp; Derakhshan, H. (2017). Information Disorder. Council of Europe. ·
+    Vosoughi, Roy &amp; Aral (2018). The spread of true and false news online. MIT / Science. ·
+    Hall, S. (1980). Encoding/Decoding. ·
+    Institute for Propaganda Analysis (1937). ·
+    Silverman, C. BuzzFeed News. ·
+    DW Akademie Media &amp; Information Literacy Guidebook.
+  </div>
+  <div class="footer-bar">
+    <span>Chew Before You Swallow — Vol.02</span>
+    <span>Media Literacy Project — 2025</span>
+    <span>Think first. Share second.</span>
+  </div>
+</div>
+
+<script>
+// ══ REACTION LAB DATA ══
+const HEADLINES = [
+  {
+    type: 'NEWS — OBVIOUS',
+    text: '"THEY ARE COMING FOR YOUR CHILDREN"',
+    emotions: ['FEAR','ANGER','PRIDE','CURIOSITY'],
+    correct: 'FEAR',
+    explain: "Vague threat. No specifics. No named source. Pure Fear Appeal — designed to make you share before you think. The vaguer the threat, the wider the fear spreads."
+  },
+  {
+    type: 'INFLUENCER — OBVIOUS',
+    text: '"This is literally the best trip of my life 🌴 link in bio to book yours (ad)"',
+    emotions: ['ENVY','FEAR','ANGER','PRIDE'],
+    correct: 'ENVY',
+    explain: "You don't feel happy for them. You feel behind. That gap between their highlight reel and your Tuesday is the product they're actually selling — not the trip."
+  },
+  {
+    type: 'ADVERTISING — SUBTLE',
+    text: '"Dermatologists don\'t want you to know about this ₹299 moisturiser"',
+    emotions: ['CURIOSITY','OUTRAGE','FEAR','PRIDE'],
+    correct: 'OUTRAGE',
+    explain: "Positions an entire profession as your enemy so clicking feels like rebellion. Outrage + Curiosity combo — one makes you angry, the other makes you tap. Classic."
+  },
+  {
+    type: 'SOCIAL MEDIA — SUBTLE',
+    text: '"She quit her corporate job, moved to Goa, and never looked back 🌿"',
+    emotions: ['INSPIRATION','SHAME','ANGER','FEAR'],
+    correct: 'SHAME',
+    explain: "Disguised as inspiration. Actually triggers shame — your ordinary life suddenly feels like a failure. The algorithm serves this to people it knows are burnt out. That's not a coincidence."
+  },
+  {
+    type: 'NEWS — MIX',
+    text: '"Local teacher saves 12 kids from flood — government takes all the credit"',
+    emotions: ['PRIDE','ANGER','FEAR','SADNESS'],
+    correct: 'PRIDE',
+    explain: "Two-step emotional hit: PRIDE first (feel good about the hero), then ANGER (feel furious at the system). You're more likely to share content that makes you feel two strong emotions back to back. The most shareable combo."
+  }
+];
+
+let labDone = 0;
+
+function initLab() {
+  labDone = 0;
+  document.getElementById('labDone').textContent = '0';
+  document.getElementById('labFill').style.width = '0%';
+  const container = document.getElementById('labCards');
+  container.innerHTML = '';
+  HEADLINES.forEach((h, i) => container.appendChild(buildCard(h, i)));
+}
+
+function buildCard(h, idx) {
+  const card = document.createElement('div');
+  card.className = 'hl-card'; card.id = 'hlcard-' + idx;
+  const btns = h.emotions.map((e, ei) =>
+    `<button class="emo-btn" onclick="pickEmotion(${idx},'${e}')">${e}</button>`
+  ).join('');
+  card.innerHTML = `
+    <div class="hl-tag">${h.type}</div>
+    <div class="hl-text">${h.text}</div>
+    <div class="hl-question">what emotion was this designed to trigger?</div>
+    <div class="hl-emotions" id="emo-${idx}">${btns}</div>
+    <div class="hl-reveal" id="reveal-${idx}">
+      <div class="reveal-result" id="result-${idx}"></div>
+      <div class="reveal-explain">${h.explain}</div>
+    </div>
+  `;
+  return card;
+}
+
+function pickEmotion(idx, picked) {
+  const h = HEADLINES[idx];
+  const card = document.getElementById('hlcard-' + idx);
+  if (card.classList.contains('answered')) return;
+  card.classList.add('answered');
+
+  const correct = picked === h.correct;
+  const btns = document.querySelectorAll(`#emo-${idx} .emo-btn`);
+  btns.forEach(btn => {
+    if (btn.textContent === picked && correct)  btn.classList.add('picked-right');
+    if (btn.textContent === picked && !correct) btn.classList.add('picked-wrong');
+    if (btn.textContent === h.correct && !correct) btn.classList.add('show-right');
+  });
+
+  const resultEl = document.getElementById('result-' + idx);
+  if (correct) {
+    card.classList.add('revealed-correct');
+    resultEl.textContent = '✓ yes — ' + h.correct;
+    resultEl.className = 'reveal-result right';
+  } else {
+    card.classList.add('revealed-wrong');
+    resultEl.textContent = '✕ it was ' + h.correct;
+    resultEl.className = 'reveal-result wrong';
+  }
+
+  labDone++;
+  document.getElementById('labDone').textContent = labDone;
+  document.getElementById('labFill').style.width = (labDone / HEADLINES.length * 100) + '%';
+}
+
+initLab();
+
+// scroll fade
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold: 0.07 });
+document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
